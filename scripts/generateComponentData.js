@@ -17,32 +17,72 @@ if (enableWatchMode) {
         generate(paths);
     });
 } else {
-    // Generate component metadata
-    generate(paths);
+    // Generate component and groups metadata
+    console.log("GENERATING DATA!!");
+    generateAll(paths);
 }
 
-function generate(paths) {
+function generateAll(paths) {
+   var wikiData = generate(paths, "", []);
+   console.log("The wiki data");
+   console.log(JSON.stringify(wikiData));
+}
+
+function generate(rootPaths, current_path, wikiData) {
     var errors = [];
-    var componentData = getDirectories(paths.components).map(function(componentName) {
+    var pathToSearch = path.join(rootPaths.components, current_path);
+    getDirectories(pathToSearch).map(function(dirName) {
         try {
-            return getComponentData(paths, componentName);
+            if(isComponentDir(pathToSearch, dirName)) {
+                 // wikiData.push({"componentName": dirName});
+                 //console.log("ITS A COMPONENT DIRECTORY!" + pathToSearch+"/"+dirName);
+                 getComponentData(pathToSearch, dirName, wikiData);
+            } else {
+                var wikiDataPart = {"groupName": dirName, "groups": [], "components": []};
+                wikiDataPart.groups = generate(rootPaths, path.join(current_path, dirName), wikiDataPart.groups);
+                wikiData.push(wikiDataPart);
+                //console.log("ITS A REGULAR DIRECTORY: " + path.join(current_path, dirName));
+            }
         } catch(error) {
-            errors.push('An error occurred while attempting to generate metadata for ' + componentName + '. ' + error);
+            errors.push('An error occurred while attempting to generate metadata for ' + dirName + '. ' + error);
         }
     });
-    writeFile(paths.output, "module.exports = /* eslint-disable */ " + JSON.stringify(errors.length ? errors : componentData));
+    return wikiData;
+    //writeFile(paths.output, "module.exports = /* eslint-disable */ " + JSON.stringify(errors.length ? errors : componentData));
 }
 
+function isComponentDir(filepath, componentName) {
+    var componentPath = path.join(filepath, componentName, componentName + '.js');
+    return fs.existsSync(componentPath);
+}
+
+/**
+ * MetaData Generation Algorithm
+ * 1. Get Directories from root folder as D
+ * 2. For each item in directory D:
+ *      a. if it is a component -
+ *          i. Add component to its current group
+ *      b. If it is a directory.
+ *          i. It is a component grouping, Create JSON object for component group
+ */
+
+
+
 function getComponentData(paths, componentName) {
-    var content = readFile(path.join(paths.components, componentName, componentName + '.js'));
-    var info = parse(content);
-    return {
-        name: componentName,
-        description: info.description,
-        props: info.props,
-        code: content,
-        examples: getExampleData(paths.examples, componentName)
-    }
+    console.log("Getting component data... " + componentName);
+
+    // var content = readFile(path.join(paths.components, componentName, componentName + '.js'));
+    // var info = parse(content);
+
+
+
+    // return {
+    //     name: componentName,
+    //     description: info.description,
+    //     props: info.props,
+    //     code: content,
+    //     examples: getExampleData(paths.examples, componentName)
+    // }
 }
 
 function getExampleData(examplesPath, componentName) {

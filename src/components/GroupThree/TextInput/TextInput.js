@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Label from '../Label/index';
+import Label from '../../GroupOne/Label/index';
 
 /** Text input with integrated label to enforce consistency in layout, error display, label placement, and required field marker. */
 function TextInput({htmlId, name, label, type = "text", required = false, onChange, placeholder, value, error, children, ...props}) {

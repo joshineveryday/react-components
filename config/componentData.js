@@ -1,12 +1,9 @@
 module.exports = /* eslint-disable */ [
-    { groupName: "Group1",
+    {   groupName: "Group1",
         groups: [
 
         ],
-      components: [{}, {}, {}]},
-
-
-
+        components: [{}, {}, {}]},
     {
     "name": "EyeIcon",
     "description": "SVG Eye Icon",

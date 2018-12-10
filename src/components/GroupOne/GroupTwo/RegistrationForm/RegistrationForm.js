@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextInput from '../TextInput/index';
-import PasswordInput from '../PasswordInput/index';
+import TextInput from '../../../GroupThree/TextInput/index';
+import PasswordInput from '../GroupThree/PasswordInput/index';
 
 /** Registration form with built-in validation. */
 class RegistrationForm extends React.Component {

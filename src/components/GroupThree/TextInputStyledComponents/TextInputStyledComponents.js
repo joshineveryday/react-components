@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Label from '../Label/index';
+import Label from '../../GroupOne/Label/index';
 import styled from 'styled-components';
 
 /** Text input with integrated label to enforce consistency in layout, error display, label placement, and required field marker. */

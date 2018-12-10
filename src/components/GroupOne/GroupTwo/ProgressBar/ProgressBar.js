@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HelloWorld from "../HelloWorld/HelloWorld";
+import HelloWorld from "../../HelloWorld/HelloWorld";
 
 class ProgressBar extends React.Component {
     getColor = (percent) => {
