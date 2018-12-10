@@ -150,6 +150,7 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      'ps-react': path.resolve(__dirname, '../src/components')
     },
     plugins: [
       // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -278,6 +279,8 @@ module.exports = {
             exclude: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
+              // modules: true,
+              // localIdentName: '[name]_[local]_[hash:base64:5]'
             }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
